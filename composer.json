@@ -1,0 +1,23 @@
+{
+	"name" : "orkan/utils",
+	"description" : "Helper functions",
+	"homepage" : "https://github.com/orkan/utils",
+	"keywords" : [
+		"php"
+	],
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Orkan",
+			"role" : "Lead",
+			"email" : "orkans@gmail.com"
+		}
+	],
+	"require" : {
+		"php" : ">=5.2"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"Orkan\\" : ""
+		}
+	}
+}
