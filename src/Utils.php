@@ -151,4 +151,20 @@ class Utils
 	{
 		return $start . implode( $end . $sep . $start, $arr ) . $end;
 	}
+
+	/**
+	 * Compute absolute path from relative at base
+	 *
+	 * @param string $path Relative path
+	 * @param string $base Base dir for $path
+	 * @return string
+	 */
+	public static function pathToAbs( string $path, string $base )
+	{
+		$old = getcwd();
+		chdir( $base );
+		$result = realpath( $path );
+		chdir( $old );
+		return $result;
+	}
 }
