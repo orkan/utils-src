@@ -167,4 +167,46 @@ class Utils
 		chdir( $old );
 		return $result;
 	}
+
+	/**
+	 * Get last key of given array
+	 *
+	 * @param array $arr
+	 * @return mixed
+	 */
+	public static function lastKey( array &$arr )
+	{
+		return key( array_slice( $arr, - 1 ) );
+	}
+
+	/**
+	 * Format two timestamps with timezone
+	 * Calculate time diff
+	 *
+	 * @param int $datetime1 Timestamp A
+	 * @param int $datetime2 Timestamp B
+	 * @param string $timezone @link https://www.php.net/manual/en/timezones.php
+	 * @param array $format['begin', 'final', 'diff'] @link https://www.php.net/manual/en/datetime.format.php
+	 * @return array Formated dates: Array ( 'begin' => ... , 'final' => ..., 'diff' => ... )
+	 */
+	public static function formatDateDiff( int $datetime1, int $datetime2, string $timezone, array $format = [] ): array
+	{
+		$out = [];
+
+		$Tzone = new \DateTimeZone( $timezone );
+		$begin = ( new \DateTime() )->setTimestamp( $datetime1 )->setTimezone( $Tzone );
+		$final = ( new \DateTime() )->setTimestamp( $datetime2 )->setTimezone( $Tzone );
+
+		$out['begin'] = $begin->format( $format[0] ?? 'l, d.m.Y H:i' );
+		$out['final'] = $final->format( $format[1] ?? 'l, d.m.Y H:i' );
+
+		if ( ! isset( $format[2] ) || '%a' === $format[2] ) {
+			$begin->setTime( 0, 0 ); // Count full days!
+			$final->setTime( 0, 0 );
+		}
+
+		$out['diff'] = $final->diff( $begin )->format( $format[2] ?? '%a' );
+
+		return $out;
+	}
 }
