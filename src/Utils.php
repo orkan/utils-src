@@ -197,16 +197,24 @@ class Utils
 		$begin = ( new \DateTime() )->setTimestamp( $datetime1 )->setTimezone( $Tzone );
 		$final = ( new \DateTime() )->setTimestamp( $datetime2 )->setTimezone( $Tzone );
 
-		$out['begin'] = $begin->format( $format[0] ?? 'l, d.m.Y H:i' );
-		$out['final'] = $final->format( $format[1] ?? 'l, d.m.Y H:i' );
+		$out['begin'] = $begin->format( $format[0] ?? 'l, d.m.Y H:i');
+		$out['final'] = $final->format( $format[1] ?? 'l, d.m.Y H:i');
 
 		if ( ! isset( $format[2] ) || '%a' === $format[2] ) {
 			$begin->setTime( 0, 0 ); // Count full days!
 			$final->setTime( 0, 0 );
 		}
 
-		$out['diff'] = $final->diff( $begin )->format( $format[2] ?? '%a' );
+		$out['diff'] = $final->diff( $begin )->format( $format[2] ?? '%a');
 
 		return $out;
+	}
+
+	/**
+	 * Increment array element
+	 */
+	public static function keyIncrement( &$arr, $key )
+	{
+		$arr[$key] = isset( $arr[$key] ) ? $arr[$key] + 1 : 1;
 	}
 }
