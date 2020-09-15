@@ -40,16 +40,16 @@ class Utils
 	/**
 	 * Call Object's private method
 	 *
-	 * @param object $obj
+	 * @param object | string $obj For static method use string then invokeArgs(null, ...)
 	 * @param string $method
 	 * @param array $args
 	 * @return mixed
 	 */
-	public static function callPrivateMethod( object $obj, string $method, $args = [] )
+	public static function callPrivateMethod( $obj, string $method, $args = [] )
 	{
 		$class = new ReflectionClass( $obj );
 		$name = $class->getMethod( $method );
 		$name->setAccessible( true ); // Set method to public
-		return $name->invokeArgs( $obj, $args ); // Call $this->name( $args );
+		return $name->invokeArgs( is_string( $obj ) ? null : $obj, $args ); // Call $this->name( $args );
 	}
 }
