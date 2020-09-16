@@ -79,6 +79,9 @@ class Utils
 	public static function print( string $message, bool $is_error = false, string $codepage = 'cp852' ): void
 	{
 		if ( defined( 'TESTING' ) ) {
+			$date = date_create_from_format( 'U.u', number_format( microtime( true ), 6, '.', '' ) )->format( 'Y-m-d H:i:s.u' );
+			$line = sprintf( '[%s] %s', $date, $message );
+			file_put_contents( 'TESTING-Orkan-Utils-print.log', $line, FILE_APPEND );
 			return;
 		}
 
@@ -216,5 +219,35 @@ class Utils
 	public static function keyIncrement( &$arr, $key )
 	{
 		$arr[$key] = isset( $arr[$key] ) ? $arr[$key] + 1 : 1;
+	}
+
+	/**
+	 * Collator::sort()
+	 *
+	 * @param array $arr
+	 * @param string $locale
+	 */
+	public static function sort( array &$arr, string $locale ): void
+	{
+		$Collator = collator_create( $locale );
+		collator_sort( $Collator, $arr );
+	}
+
+	/**
+	 * Missing Collator::ksort()
+	 *
+	 * @param array $arr
+	 * @param string $locale
+	 */
+	public static function ksort( array &$arr, string $locale ): void
+	{
+		$out = [];
+		$keys = array_keys( $arr );
+		$Collator = collator_create( $locale );
+		collator_sort( $Collator, $keys );
+		foreach ( $keys as $k ) {
+			$out[$k] = $arr[$k];
+		}
+		$arr = $out;
 	}
 }
