@@ -217,4 +217,34 @@ class Utils
 	{
 		$arr[$key] = isset( $arr[$key] ) ? $arr[$key] + 1 : 1;
 	}
+
+	/**
+	 * Collator::sort()
+	 *
+	 * @param array $arr
+	 * @param unknown $locale
+	 */
+	public static function sort( array &$arr, $locale ): void
+	{
+		$Collator = collator_create( $locale );
+		collator_sort( $Collator, $arr );
+	}
+
+	/**
+	 * Missing Collator::ksort()
+	 *
+	 * @param array $arr
+	 * @param unknown $locale
+	 */
+	public static function ksort( array &$arr, $locale ): void
+	{
+		$out = [];
+		$keys = array_keys( $arr );
+		$Collator = collator_create( $locale );
+		collator_sort( $Collator, $keys );
+		foreach ( $keys as $k ) {
+			$out[$k] = $arr[$k];
+		}
+		$arr = $out;
+	}
 }
