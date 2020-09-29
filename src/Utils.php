@@ -145,12 +145,12 @@ class Utils
 	 * Example: 'aaa', 'bbb', 'ccc'
 	 *
 	 * @param array $arr
+	 * @param string $sep
 	 * @param string $start
 	 * @param string $end
-	 * @param string $sep
 	 * @return string
 	 */
-	public static function implode( array $arr, string $start = "'", string $end = "'", string $sep = ', ' ): string
+	public static function implode( array $arr, string $sep = ', ', string $start = "'", string $end = "'" ): string
 	{
 		return $start . implode( $end . $sep . $start, $arr ) . $end;
 	}
