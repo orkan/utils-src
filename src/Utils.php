@@ -27,13 +27,14 @@ class Utils
 	 *
 	 * @param float $seconds Time in fractional seconds
 	 * @param bool $fractions Add fractions part?
+	 * @param int $precision How many fractional digits?
 	 * @return string Time in format 18394d 16g 11m 41.589s
 	 */
-	public static function formatTime( float $seconds, bool $fractions = true ): string
+	public static function formatTime( float $seconds, bool $fractions = true, int $precision = 3 ): string
 	{
 		$d = $h = $m = 0;
 		$s = (int) $seconds; // truncate fraction
-		$u = $fractions ? round( $seconds - $s, 3 ) : 0; // truncate int and round
+		$u = $fractions ? round( $seconds - $s, $precision ) : 0; // truncate int and round
 
 		if ( $s >= 86400 ) {
 			$d = floor( $s / 86400 );
@@ -250,5 +251,24 @@ class Utils
 			$out[$k] = $arr[$k];
 		}
 		$arr = $out;
+	}
+
+	/**
+	 * Compute execution time
+	 *
+	 * @param int|float $start Previous time in nanoseconds or leave empty to get new one
+	 * @return float Time diff in frac seconds
+	 */
+	public static function exectime( $start = 0 )
+	{
+		$time = hrtime( true );
+
+		if ( 0 == $start ) {
+			return $time;
+		}
+
+		$end = $time - $start;
+		$end = $end / 1e+9; // nanoseconds to seconds 0.123456789
+		return $end;
 	}
 }
