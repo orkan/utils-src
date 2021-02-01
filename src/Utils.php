@@ -1,5 +1,4 @@
 <?php
-
 namespace Orkan;
 
 /**
@@ -79,9 +78,9 @@ class Utils
 	public static function print( string $message, bool $is_error = false, string $codepage = 'cp852' ): void
 	{
 		if ( defined( 'TESTING' ) ) {
-			$date = date_create_from_format( 'U.u', number_format( microtime( true ), 6, '.', '' ) )->format( 'Y-m-d H:i:s.u' );
+			$date = \DateTime::createFromFormat( 'U.u', microtime( true ) )->format( 'Y-m-d H:i:s.u' );
 			$line = sprintf( '[%s] %s', $date, $message );
-			file_put_contents( 'TESTING-Orkan-Utils-print.log', $line, FILE_APPEND );
+			file_put_contents( __DIR__ . '/TESTING-Orkan-Utils-print.log', $line, FILE_APPEND );
 			return;
 		}
 
@@ -186,19 +185,21 @@ class Utils
 	 * Format two timestamps with timezone
 	 * Calculate time diff
 	 *
-	 * @param int $datetime1 Timestamp A
-	 * @param int $datetime2 Timestamp B
-	 * @param string $timezone @link https://www.php.net/manual/en/timezones.php
-	 * @param array $format['begin', 'final', 'diff'] @link https://www.php.net/manual/en/datetime.format.php
+	 * @param int $time Timestamp A
+	 * @param int $stop Timestamp B
+	 * @param string $zone @link https://www.php.net/manual/en/timezones.php
+	 * @param array $format['begin', 'final', 'diff']
+	 * @link https://www.php.net/manual/en/datetime.format.php
+	 * @link https://www.php.net/manual/en/dateinterval.format.php
 	 * @return array Formated dates: Array ( 'begin' => ... , 'final' => ..., 'diff' => ... )
 	 */
-	public static function formatDateDiff( int $datetime1, int $datetime2, string $timezone, array $format = [] ): array
+	public static function formatDateDiff( int $time, int $stop, string $zone, array $format = [] ): array
 	{
 		$out = [];
 
-		$Tzone = new \DateTimeZone( $timezone );
-		$begin = ( new \DateTime() )->setTimestamp( $datetime1 )->setTimezone( $Tzone );
-		$final = ( new \DateTime() )->setTimestamp( $datetime2 )->setTimezone( $Tzone );
+		$Tzone = new \DateTimeZone( $zone );
+		$begin = ( new \DateTime() )->setTimestamp( $time )->setTimezone( $Tzone );
+		$final = ( new \DateTime() )->setTimestamp( $stop )->setTimezone( $Tzone );
 
 		$out['begin'] = $begin->format( $format[0] ?? 'l, d.m.Y H:i');
 		$out['final'] = $final->format( $format[1] ?? 'l, d.m.Y H:i');
