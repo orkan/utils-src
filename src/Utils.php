@@ -32,6 +32,10 @@ class Utils
 	 */
 	public static function formatTime( float $seconds, bool $fractions = true, int $precision = 3 ): string
 	{
+		if ( defined( 'DEBUG' ) ) {
+			$precision = max( 6, $precision );
+		}
+
 		$d = $h = $m = 0;
 		$s = (int) $seconds; // truncate fraction
 		$u = $fractions ? round( $seconds - $s, $precision ) : 0; // truncate int and round
@@ -160,7 +164,7 @@ class Utils
 	 *
 	 * @param string $path Relative path
 	 * @param string $base Base dir for $path
-	 * @return string
+	 * @return string|bool Realpath or false if not found
 	 */
 	public static function pathToAbs( string $path, string $base )
 	{
