@@ -37,8 +37,8 @@ class Utils
 		}
 
 		$d = $h = $m = 0;
-		$s = (int) $seconds; // truncate fraction
-		$u = $fractions ? round( $seconds - $s, $precision ) : 0; // truncate int and round
+		$s = (int) $seconds; // get int
+		$u = $seconds - $s; // get fractions
 
 		if ( $s >= 86400 ) {
 			$d = floor( $s / 86400 );
@@ -52,7 +52,7 @@ class Utils
 			$m = floor( $s / 60 );
 			$s = floor( $s % 60 );
 		}
-		$s = $s + $u;
+		$s = $fractions ? sprintf("%.{$precision}f", $s + $u) : $s;
 		return trim( ( $d ? "{$d}d " : '' ) . ( $h ? "{$h}g " : '' ) . ( $m ? "{$m}m " : '' ) . "{$s}s" );
 	}
 
