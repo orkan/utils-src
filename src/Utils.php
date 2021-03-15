@@ -85,7 +85,7 @@ class Utils
 		if ( defined( 'TESTING' ) ) {
 			$date = \DateTime::createFromFormat( 'U.u', microtime( true ) )->format( 'Y-m-d H:i:s.u' );
 			$line = sprintf( '[%s] %s', $date, $message );
-			file_put_contents( __DIR__ . '/TESTING-Orkan-Utils-print.log', $line, FILE_APPEND );
+			file_put_contents( __DIR__ . '/../tests/_cache/TESTING-Orkan-Utils-print.log', $line, FILE_APPEND );
 			return;
 		}
 

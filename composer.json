@@ -12,8 +12,14 @@
 			"email" : "orkans@gmail.com"
 		}
 	],
+	"config": {
+		"vendor-dir": "../vendor"
+	},
 	"require" : {
-		"php" : ">=5.2"
+		"php" : ">=5.3"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^9.3"
 	},
 	"autoload" : {
 		"psr-4" : {
@@ -22,7 +28,7 @@
 	},
 	"extra" : {
 		"branch-alias" : {
-			"dev-master" : "1.3.x-dev"
+			"dev-master" : "1.4.x-dev"
 		}
 	}
 }
