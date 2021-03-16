@@ -52,7 +52,7 @@ class Utils
 			$m = floor( $s / 60 );
 			$s = floor( $s % 60 );
 		}
-		$s = $fractions ? sprintf("%.{$precision}f", $s + $u) : $s;
+		$s = $fractions ? sprintf( "%.{$precision}f", $s + $u ) : $s;
 		return trim( ( $d ? "{$d}d " : '' ) . ( $h ? "{$h}g " : '' ) . ( $m ? "{$m}m " : '' ) . "{$s}s" );
 	}
 
@@ -60,12 +60,24 @@ class Utils
 	 * Remove double spaces from PHP::print_r()
 	 *
 	 * @param array $array
+	 * @param bool $simple Remove objects?
 	 * @return string
 	 */
-	public static function print_r( array $array ): string
+	public static function print_r( array $array, bool $simple = true ): string
 	{
+		/*
+		 * Replace each Object in array with class name string
+		 *
+		 * @formatter:off */
+		if( $simple ) {
+			array_walk_recursive( $array, function( &$val ) {
+				is_object( $val ) && $val = '(Object) ' . get_class( $val );
+			});
+		}
+		/* @formatter:on */
+
 		$str = print_r( $array, true );
-		return preg_replace( '/[ ]{2,}/', '', $str );
+		return preg_replace( '/[ ]{2,}/', '', $str ); // remove double spacess
 	}
 
 	/**
@@ -91,7 +103,8 @@ class Utils
 
 		if ( 'cli' === php_sapi_name() ) {
 			fwrite( $is_error ? STDERR : STDOUT, iconv( 'utf-8', $codepage, $message ) );
-		} else {
+		}
+		else {
 			echo $message;
 		}
 	}
