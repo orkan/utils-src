@@ -19,10 +19,15 @@
 		</delete>
 
 		<copy toDir="${TargetDir}" preserveLastModified="true" verbose="false">
-			<fileset dir="${SourceDir}" 
-				excludes="cache/**, **/*.cache, **/*.bak, **/_cache/**, **/_coverage/**" 
-				defaultExcludes="false"
-				/>
+			<fileset dir="${SourceDir}" defaultExcludes="false"
+				excludes="
+				.git,
+				**/*.bak,
+				**/*.cache,
+				cache/**,
+				**/_cache/**,
+				**/_coverage/**" 
+			/>
 			<fileset dir="${SourceDir}" includes="**/.gitkeep" />
 		</copy>
 
