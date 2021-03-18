@@ -1,7 +1,3 @@
 @echo off
-cd %~dp1
 
-php -f %1
-
-echo.
-pause
+%~dp0run.bat %1
