@@ -288,4 +288,23 @@ class Utils
 		$end = $end / 1e+9; // nanoseconds to seconds 0.123456789
 		return $end;
 	}
+
+	/**
+	 * Throw Exception if false
+	 *
+	 * @param mixed $result PHP function results
+	 * @param string $message
+	 * @param int $code
+	 * @throws \Exception
+	 */
+	public static function checkError( $result, string $message, int $code = 1 ): void
+	{
+		if ( false === $result ) {
+			$e = error_get_last();
+			$m = $message;
+			$m .= sprintf( "\nPHP error (#%d): %s", $e['type'], $e['message'] );
+			$m .= defined( 'DEBUG' ) ? sprintf( ' in %s:%d', $e['file'], $e['line'] ) : '';
+			throw new \Exception( $m, $code );
+		}
+	}
 }
