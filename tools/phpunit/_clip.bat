@@ -4,8 +4,15 @@ call %~dp0_header.bat "%~f0"
 setlocal
 set COMMAND=%*
 
-echo.
-echo Use right mouse button to run again!
+echo ----------
+echo %COMMAND%
+echo ----------
 
-REM Copy COMMAND to clip.exe
-echo %COMMAND%| clip
+REM echo.
+REM echo Use right mouse button to run again!
+
+REM Adds new line at the end
+REM echo %COMMAND%| clip
+
+REM Fixes new line problem
+<nul set /p "=%COMMAND%" | clip
