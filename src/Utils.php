@@ -307,4 +307,27 @@ class Utils
 			throw new \Exception( $m, $code );
 		}
 	}
+
+	/**
+	 * The one and only file extension method :D !!!
+	 *
+	 * @param string $file Name / path
+	 * @return string
+	 */
+	public static function fileExt( string $file ): string
+	{
+		return strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
+	}
+
+	/**
+	 * Generate path from BASE + array elements
+	 *
+	 * @param string $base Home dir
+	 * @param array $elements Path elements
+	 * @return string
+	 */
+	public static function buildPath( string $base, array $elements )
+	{
+		return $base . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $elements );
+	}
 }
