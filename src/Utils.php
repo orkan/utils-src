@@ -196,7 +196,7 @@ class Utils
 	 */
 	public static function lastKey( array &$arr )
 	{
-		return key( array_slice( $arr, - 1 ) );
+		return key( array_slice( $arr, - 1, null, true ) ); // 4th param - preserve numeric keys!
 	}
 
 	/**
@@ -329,5 +329,36 @@ class Utils
 	public static function buildPath( string $base, array $elements )
 	{
 		return $base . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $elements );
+	}
+
+	/**
+	 * Recursively remove a directory
+	 *
+	 * @param  string  $directory
+	 * @return bool
+	 */
+	public static function removeDirectory( $directory )
+	{
+		$cmd = defined( 'PHP_WINDOWS_VERSION_BUILD' ) ? 'rd /S /Q %s' : 'rm -rf %s';
+		$cmd = sprintf( $cmd, realpath( $directory ) );
+		shell_exec( $cmd );
+
+		return ! is_dir( $directory );
+	}
+
+	/**
+	 * Recursively copy a directory
+	 *
+	 * @param  string  $source
+	 * @param  string  $destination
+	 * @return bool
+	 */
+	public static function copyDirectory( $source, $destination )
+	{
+		$cmd = defined( 'PHP_WINDOWS_VERSION_BUILD' ) ? 'xcopy /E  %s %s' : 'cp -R %s %s';
+		$cmd = sprintf( $cmd, realpath( $source ), realpath( $destination ) );
+		shell_exec( $cmd );
+
+		return true;
 	}
 }
