@@ -309,14 +309,25 @@ class Utils
 	}
 
 	/**
-	 * The one and only file extension method :D !!!
+	 * Get file extension
 	 *
 	 * @param string $file Name / path
-	 * @return string
+	 * @return string Extension
 	 */
 	public static function fileExt( string $file ): string
 	{
 		return strtolower( pathinfo( $file, PATHINFO_EXTENSION ) );
+	}
+
+	/**
+	 * Get file path without extension
+	 *
+	 * @param string $file Name / path
+	 * @return string Base path with no extension
+	 */
+	public static function fileNoExt( string $file ): string
+	{
+		return preg_replace( '~(\.[^\.]+)$~', '', $file );
 	}
 
 	/**
@@ -330,6 +341,23 @@ class Utils
 	{
 		return $base . DIRECTORY_SEPARATOR . implode( DIRECTORY_SEPARATOR, $elements );
 	}
+
+	/**
+	 * Remove file. Wilcards possible
+	 *
+	 * @param  string  $file
+	 */
+	// 	public static function removeFile( $file )
+	// 	{
+	// 		$file = str_replace( '\\', '/', $file );
+	// 		$file = str_replace( '/', DIRECTORY_SEPARATOR, $file );
+
+	// 		$cmd = defined( 'PHP_WINDOWS_VERSION_BUILD' ) ? 'del /Q %s' : 'rm -f %s';
+	// 		$cmd = sprintf( $cmd, $file );
+	// 		shell_exec( $cmd );
+
+	// 		// Cannot suppress Windows message: Could Not Find ... on missing files
+	// 	}
 
 	/**
 	 * Recursively remove a directory
