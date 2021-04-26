@@ -2,8 +2,8 @@
 setlocal
 
 REM Config: --------------------------------------------
-set SOURCE=%1
-set INCLUDES=%2
+set SOURCE=%~1
+set INCLUDES=%~2
 set EXTRAS=%~3
 set CONTINUE=%~4
 
@@ -12,6 +12,7 @@ if not exist %SOURCE% (
 	exit /b 1
 )
 pushd %SOURCE%
+echo %CD%
 
 REM Confirm: -------------------------------------------
 if "%CONTINUE%" NEQ "" (
@@ -36,7 +37,7 @@ set /p MESSAGE=Release message (no commit if empty):
 
 REM Run: -----------------------------------------------
 echo.
-cmd /c ant -DSourceDir=%SOURCE% -DIncludes=%INCLUDES% -DVersion=%VERSION% -f "%~dpn0.xml"
+cmd /c ant -DSourceDir="%SOURCE%" -DIncludes="%INCLUDES%" -DVersion="%VERSION%" -f "%~dpn0.xml"
 
 REM Git: -----------------------------------------------
 if "%MESSAGE%" == "" goto :end

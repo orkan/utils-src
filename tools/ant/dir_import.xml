@@ -4,9 +4,11 @@
 
 	<target name="main">
 
-		<echo>Mirroring [SourceDir] to [TargetDir]</echo>
+		<echo>Mirror [SourceDir] to [TargetDir]</echo>
 		<echo>SourceDir: ${SourceDir}</echo>
 		<echo>TargetDir: ${TargetDir}</echo>
+		<echo>Excludes : ${Excludes}</echo>
+		<echo>Includes : ${Includes}</echo>
 
 		<delete includeEmptyDirs="true" verbose="false">
 			<!--
@@ -16,22 +18,31 @@
 					- default excludes, https://ant.apache.org/manual/dirtasks.html#defaultexcludes
 			-->
 			<fileset dir="${TargetDir}" defaultExcludes="true">
-				<include name="**/*"/>
+				<include name="**/*" />
 			</fileset>
 		</delete>
 
 		<copy toDir="${TargetDir}" preserveLastModified="true" verbose="false">
-			<fileset dir="${SourceDir}" defaultExcludes="false"
-				excludes="
+			<fileset dir="${SourceDir}" defaultExcludes="false">
+
+				<!-- Defaults -->
+				<exclude name="
 				.git,
 				.git/**,
 				**/*.bak,
 				**/*.cache,
 				cache/**,
 				**/_cache/**,
-				**/_coverage/**"
-			/>
-			<fileset dir="${SourceDir}" includes="**/.gitkeep" />
+				**/_coverage/**
+				" />
+				<include name="**/*" />
+
+				<!-- User specs -->
+				<exclude name="${Excludes}" />
+				<include name="${Includes}" />
+
+			</fileset>
+
 		</copy>
 
 	</target>
