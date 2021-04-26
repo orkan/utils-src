@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="dirmirror" default="main" basedir=".">
+<project name="dir_import" default="main" basedir=".">
 
 	<target name="main">
 
-		<echo>Mirroring [SourceDir] to [TargetDir]</echo>
+		<echo>Mirror [SourceDir] to [TargetDir]</echo>
 		<echo>SourceDir: ${SourceDir}</echo>
 		<echo>TargetDir: ${TargetDir}</echo>
+		<echo>Excludes : ${Excludes}</echo>
+		<echo>Includes : ${Includes}</echo>
 
 		<delete includeEmptyDirs="true" verbose="false">
 			<!--
@@ -15,20 +17,32 @@
 					- [TargetDir] itself
 					- default excludes, https://ant.apache.org/manual/dirtasks.html#defaultexcludes
 			-->
-			<fileset dir="${TargetDir}" includes="**/*" defaultExcludes="true" />
+			<fileset dir="${TargetDir}" defaultExcludes="true">
+				<include name="**/*" />
+			</fileset>
 		</delete>
 
 		<copy toDir="${TargetDir}" preserveLastModified="true" verbose="false">
-			<fileset dir="${SourceDir}" defaultExcludes="false"
-				excludes="
+			<fileset dir="${SourceDir}" defaultExcludes="false">
+
+				<!-- Defaults -->
+				<exclude name="
 				.git,
+				.git/**,
 				**/*.bak,
 				**/*.cache,
 				cache/**,
 				**/_cache/**,
-				**/_coverage/**" 
-			/>
-			<fileset dir="${SourceDir}" includes="**/.gitkeep" />
+				**/_coverage/**
+				" />
+				<include name="**/*" />
+
+				<!-- User specs -->
+				<exclude name="${Excludes}" />
+				<include name="${Includes}" />
+
+			</fileset>
+
 		</copy>
 
 	</target>

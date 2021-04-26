@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build_release" default="main" basedir=".">
+
+	<target name="main">
+
+		<taskdef resource="net/sf/antcontrib/antlib.xml"/>
+
+		<echo>Build release</echo>
+		<echo>SourceDir: ${SourceDir}</echo>
+		<echo>Includes: ${Includes}</echo>
+		<echo>Version: ${Version}</echo>
+
+		<tstamp>
+			<format property="Year" pattern="yyyy"/>
+			<format property="DATE_RFC2822" pattern="EEE, dd MMM yyyy HH:mm:ss XXX" locale="en,UK"/>
+			<format property="DATE_RFC3339" pattern="yyyy-MM-dd'T'HH:mm:ssXXX"/>
+		</tstamp>
+
+		<propertyregex property="VersionMajor" input="${Version}" regexp="(\d+)\.(\d+)\.(\d+)([\-|\+][0-9A-Z-]+)?" select="\1" casesensitive="false" defaultValue="?"/>
+		<propertyregex property="VersionMinor" input="${Version}" regexp="(\d+)\.(\d+)\.(\d+)([\-|\+][0-9A-Z-]+)?" select="\2" casesensitive="false" defaultValue="?"/>
+		<propertyregex property="VersionPatch" input="${Version}" regexp="(\d+)\.(\d+)\.(\d+)([\-|\+][0-9A-Z-]+)?" select="\3" casesensitive="false" defaultValue="?"/>
+		<propertyregex property="VersionMetas" input="${Version}" regexp="(\d+)\.(\d+)\.(\d+)([\-|\+][0-9A-Z-]+)?" select="\4" casesensitive="false" defaultValue="?"/>
+
+		<replace dir="${SourceDir}" includes="${Includes}" summary="true">
+			<replacefilter token="@Year@" value="${Year}"/>
+			<replacefilter token="@DATE_RFC2822@" value="${DATE_RFC2822}"/>
+			<replacefilter token="@DATE_RFC3339@" value="${DATE_RFC3339}"/>
+			<replacefilter token="@Version@" value="${Version}"/>
+			<replacefilter token="@VersionMajor@" value="${VersionMajor}"/>
+			<replacefilter token="@VersionMinor@" value="${VersionMinor}"/>
+			<replacefilter token="@VersionPatch@" value="${VersionPatch}"/>
+			<replacefilter token="@VersionMetas@" value="${VersionMetas}"/>
+		</replace>
+
+	</target>
+
+</project>
