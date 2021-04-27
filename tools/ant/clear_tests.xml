@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build_release" default="main" basedir=".">
+
+	<target name="main">
+
+		<echo>Clear tests</echo>
+		<echo>SourceDir: ${SourceDir}</echo>
+
+		<replaceregexp match="^\s+\* @group single\n" replace="" flags="gm" byline="no">
+			<fileset dir="${SourceDir}" includes="**/*Test.php"/>
+		</replaceregexp>
+
+	</target>
+
+</project>
