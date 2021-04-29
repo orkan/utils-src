@@ -3,12 +3,30 @@
 <project name="dir_import" default="main" basedir=".">
 
 	<target name="main">
-
+		
 		<echo>Mirror [SourceDir] to [TargetDir]</echo>
 		<echo>SourceDir: ${SourceDir}</echo>
 		<echo>TargetDir: ${TargetDir}</echo>
 		<echo>Excludes : ${Excludes}</echo>
 		<echo>Includes : ${Includes}</echo>
+
+		<fail message="Source dir not found">
+			<condition>
+			<or>
+				<equals arg1="${SourceDir}" arg2=""/>
+				<not><available file="${SourceDir}" type="dir"/></not>
+			</or>
+			</condition>
+		</fail>
+		
+		<fail message="Target dir not found">
+			<condition>
+			<or>
+				<equals arg1="${TargetDir}" arg2=""/>
+				<not><available file="${TargetDir}" type="dir"/></not>
+			</or>
+			</condition>
+		</fail>
 
 		<delete includeEmptyDirs="true" verbose="false">
 			<!--
@@ -42,7 +60,6 @@
 				<include name="${Includes}" />
 
 			</fileset>
-
 		</copy>
 
 	</target>
