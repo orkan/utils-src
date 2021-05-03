@@ -23,7 +23,8 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"Orkan\\" : "src/"
+			"Orkan\\" : "src/",
+			"Orkan\\Tests\\" : "tests/"
 		}
 	},
 	"extra" : {
