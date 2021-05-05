@@ -3,7 +3,7 @@
 <project name="dir_import" default="main" basedir=".">
 
 	<target name="main">
-		
+
 		<echo>Mirror [SourceDir] to [TargetDir]</echo>
 		<echo>SourceDir: ${SourceDir}</echo>
 		<echo>TargetDir: ${TargetDir}</echo>
@@ -18,7 +18,7 @@
 			</or>
 			</condition>
 		</fail>
-		
+
 		<fail message="Target dir not found">
 			<condition>
 			<or>
@@ -30,8 +30,8 @@
 
 		<delete includeEmptyDirs="true" verbose="false">
 			<!--
-				Delete all files and subdirectories of [TargetDir]
-				without:
+				Delete all files and subdirectories from [TargetDir]
+				except:
 					- [TargetDir] itself
 					- default excludes, https://ant.apache.org/manual/dirtasks.html#defaultexcludes
 			-->
@@ -41,23 +41,18 @@
 		</delete>
 
 		<copy toDir="${TargetDir}" preserveLastModified="true" verbose="false">
-			<fileset dir="${SourceDir}" defaultExcludes="false">
-
-				<!-- Defaults -->
-				<exclude name="
-				.git,
-				.git/**,
-				**/*.bak,
-				**/*.cache,
-				cache/**,
-				**/_cache/**,
-				**/_coverage/**
-				" />
-				<include name="**/*" />
-
-				<!-- User specs -->
-				<exclude name="${Excludes}" />
-				<include name="${Includes}" />
+			<fileset dir="${SourceDir}" includes="${Includes}" excludes="${Excludes}" defaultExcludes="true">
+			<!--
+				Copy all files and subdirectories from [SourceDir]
+				except:
+					- default excludes
+					- custom excludes
+			-->
+				<exclude name="**/*.bak"/>
+				<exclude name="**/*.cache"/>
+				<exclude name="cache/**"/>
+				<exclude name="**/_cache/**"/>
+				<exclude name="**/_coverage/**"/>
 
 			</fileset>
 		</copy>
