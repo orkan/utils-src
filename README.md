@@ -3,10 +3,8 @@ Bunch of scripts collected from all around the HDD
 
 ## Installation
 ### composer.json:
-```
-$ composer require orkan/utils *
-$ composer update
-```
+`$ composer require orkan/utils`
+
 ## Third Party Packages
 - none
 
@@ -21,7 +19,7 @@ $ composer update
   - MySQL
 
 ### Author
-Orkan - orkans@gmail.com - https://github.com/orkan/utils-src
+[Orkan](https://github.com/orkan/utils-src)
 
 ### License
 MIT License
