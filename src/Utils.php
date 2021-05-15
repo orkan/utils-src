@@ -23,6 +23,14 @@ class Utils
 	}
 
 	/**
+	 * Finally the formatNumber() unified method
+	 */
+	public static function formatNumber( float $number = 0, int $decimals = 0 , string $point = '.' , string $sep = ' ' ): string
+	{
+		return number_format( $number, $decimals, $point, $sep );
+	}
+
+	/**
 	 * Format time
 	 *
 	 * @param float $seconds Time in fractional seconds
@@ -53,7 +61,7 @@ class Utils
 			$s = floor( $s % 60 );
 		}
 		$s = $fractions ? sprintf( "%.{$precision}f", $s + $u ) : $s;
-		return trim( ( $d ? "{$d}d " : '' ) . ( $h ? "{$h}g " : '' ) . ( $m ? "{$m}m " : '' ) . "{$s}s" );
+		return trim( ( $d ? "{$d}d " : '' ) . ( $h ? "{$h}h " : '' ) . ( $m ? "{$m}m " : '' ) . "{$s}s" );
 	}
 
 	/**
