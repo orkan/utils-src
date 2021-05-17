@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="fix_eol" default="main" basedir=".">
+
+	<target name="main">
+
+		<echo>FixCRLF</echo>
+		<echo>SourceDir: ${SourceDir}</echo>
+		<echo>Excludes : ${Excludes}</echo>
+		<echo>Includes : ${Includes}</echo>
+		<echo>EOL: ${EOL}</echo>
+
+		<fail message="Source dir not found">
+			<condition>
+			<or>
+				<equals arg1="${SourceDir}" arg2=""/>
+				<not><available file="${SourceDir}" type="dir"/></not>
+			</or>
+			</condition>
+		</fail>
+
+		<fixcrlf srcdir="${SourceDir}" includes="${Includes}" excludes="${Excludes}" eol="${EOL}"/>
+
+	</target>
+
+</project>
