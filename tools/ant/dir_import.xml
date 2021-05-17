@@ -40,7 +40,9 @@
 			</fileset>
 		</delete>
 
-		<copy toDir="${TargetDir}" preserveLastModified="true" verbose="false">
+		<!-- <defaultexcludes remove="**/.gitkeep"/> -->
+
+		<copy toDir="${TargetDir}" includeEmptyDirs="true" preserveLastModified="true" verbose="false">
 			<fileset dir="${SourceDir}" includes="${Includes}" excludes="${Excludes}" defaultExcludes="true">
 			<!--
 				Copy all files and subdirectories from [SourceDir]
@@ -50,7 +52,6 @@
 			-->
 				<exclude name="**/*.bak"/>
 				<exclude name="**/*.cache"/>
-				<exclude name="cache/**"/>
 				<exclude name="**/_cache/**"/>
 				<exclude name="**/_coverage/**"/>
 
